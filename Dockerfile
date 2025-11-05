@@ -71,9 +71,9 @@ COPY --from=builder --chown=1000 /app/.venv /app/.venv
 
 ENV PATH="/app/.venv/bin:$PATH"
 ENV LANGFLOW_HOST=0.0.0.0
-ENV LANGFLOW_PORT=7860
 
 USER user
 WORKDIR /app
 
-CMD ["langflow", "run"]
+# Railway provides PORT env var, use it if available, otherwise default to 7860
+CMD langflow run --host 0.0.0.0 --port ${PORT:-7860}
