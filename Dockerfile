@@ -30,7 +30,7 @@ COPY ./src/lfx/README.md /app/src/lfx/README.md
 COPY ./src/lfx/pyproject.toml /app/src/lfx/pyproject.toml
 
 # Install dependencies
-RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv \
+RUN --mount=type=cache,id=langflow-uv-cache,target=/root/.cache/uv \
     RUSTFLAGS='--cfg reqwest_unstable' \
     uv sync --frozen --no-install-project --no-editable --extra postgresql
 
@@ -40,7 +40,7 @@ COPY ./src /app/src
 # Build frontend
 COPY src/frontend /tmp/src/frontend
 WORKDIR /tmp/src/frontend
-RUN --mount=type=cache,id=npm-cache,target=/root/.npm \
+RUN --mount=type=cache,id=langflow-npm-cache,target=/root/.npm \
     npm ci \
     && ESBUILD_BINARY_PATH="" NODE_OPTIONS="--max-old-space-size=12288" JOBS=1 npm run build \
     && cp -r build /app/src/backend/langflow/frontend \
@@ -49,7 +49,7 @@ RUN --mount=type=cache,id=npm-cache,target=/root/.npm \
 WORKDIR /app
 
 # Install project
-RUN --mount=type=cache,id=uv-cache-2,target=/root/.cache/uv \
+RUN --mount=type=cache,id=langflow-uv-project-cache,target=/root/.cache/uv \
     RUSTFLAGS='--cfg reqwest_unstable' \
     uv sync --frozen --no-editable --extra postgresql
 
