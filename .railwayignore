@@ -1,0 +1,73 @@
+# Railway ignore file - excludes files from deployment
+
+# Development files
+.git
+.github
+.vscode
+.idea
+*.pyc
+__pycache__
+.pytest_cache
+.mypy_cache
+.ruff_cache
+*.egg-info
+.coverage
+htmlcov
+coverage
+
+# Test files
+tests/
+test-results/
+src/backend/tests/
+src/lfx/tests/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Docker files (we use railway.Dockerfile)
+docker/
+docker_example/
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Deployment configs for other platforms
+deploy/
+render.yaml
+
+# Development tools
+.pre-commit-config.yaml
+codecov.yml
+Makefile
+Makefile.frontend
+
+# Node modules and frontend build artifacts
+node_modules/
+.npm
+.next
+dist/
+build/
+
+# Environment files (use Railway's env vars instead)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large data files
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# Scripts
+scripts/

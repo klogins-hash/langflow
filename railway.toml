@@ -1,0 +1,36 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "railway.Dockerfile"
+
+[deploy]
+startCommand = "python -m langflow run --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/health_check"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+[[deploy.environmentVariables]]
+name = "LANGFLOW_HOST"
+value = "0.0.0.0"
+
+[[deploy.environmentVariables]]
+name = "LANGFLOW_PORT"
+value = "$PORT"
+
+[[deploy.environmentVariables]]
+name = "LANGFLOW_LOG_LEVEL"
+value = "INFO"
+
+[[deploy.environmentVariables]]
+name = "LANGFLOW_DATABASE_URL"
+# Railway will automatically provide DATABASE_URL if you add a PostgreSQL service
+# For SQLite (development only), use: sqlite:////app/data/.cache/langflow/langflow.db
+value = "${DATABASE_URL:-sqlite:////app/data/.cache/langflow/langflow.db}"
+
+[[deploy.environmentVariables]]
+name = "LANGFLOW_WORKERS"
+value = "1"
+
+[[deploy.environmentVariables]]
+name = "LANGFLOW_AUTO_LOGIN"
+value = "false"
